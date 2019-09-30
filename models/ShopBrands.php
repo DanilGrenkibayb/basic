@@ -51,4 +51,10 @@ class ShopBrands extends \yii\db\ActiveRecord
             'active' => 'Active',
         ];
     }
+    public function getShopBrands(){
+        return $this->hasOne(ShopBrands::className(),[
+            'id'=> 'brand_id'
+        ] );
+
+    }
 }

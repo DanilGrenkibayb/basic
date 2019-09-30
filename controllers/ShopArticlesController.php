@@ -43,123 +43,40 @@ class ShopArticlesController extends ActiveController
 //        ]);
 //    }
 
-    /**
-     * Displays a single ShopArticles model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
 
-    /**
-     * Creates a new ShopArticles model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new ShopArticles();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing ShopArticles model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing ShopArticles model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the ShopArticles model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return ShopArticles the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = ShopArticles::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-
-    public function actionEntry($id)
+    public function actionByBrand($id)
     {
         $query = ShopArticles::find();
-        $articles = $query->orderBy('id')
-            ->where(['brand_id' => $id])
-            ->offset(0)
-            ->limit('all')
-            ->all();
-        return $articles;
+        $query = $query->where(['brand_id' => $id]);
+
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 2,
+            ],
+        ]);
+
+        return $provider;
 
     }
     public function actionSearch($article)
     {
         $queryArticles = ShopArticles::find();
-        $queryBrands = ShopBrands::find();
-        $articlesMy = $queryArticles->orderBy('article')
-            ->where(['article' => $article])
-            ->offset(0)
-            ->limit('all')
-            ->all();
 
-        return $articlesMy;
+        $queryArticles = $queryArticles->where(['article' => $article]);
+        $articlesSearch = new ActiveDataProvider([
+            'query' => $queryArticles,
+            'pagination' => [
+                'pageSize' => 2,
+            ],
+        ]);
+
+        return $articlesSearch;
 
 
-        foreach($articlesMy as $branding){
-            $brandId = $branding->brand_id;
-        };
 
-        $brandsMy = $queryBrands->orderBy('id')
-            ->where(['id' => $brandId])
-            ->offset(0)
-            ->limit('all')
-            ->all();
-        return $brandsMy;
 
     }
+
 
 }

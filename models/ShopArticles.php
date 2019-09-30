@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "shop_articles".
@@ -47,13 +48,16 @@ class ShopArticles extends \yii\db\ActiveRecord
             'brand_id' => 'Brand ID',
             'name' => 'Name',
             'date_add' => 'Date Add',
+
         ];
     }
+
     public function getShopBrands(){
         return $this->hasOne(ShopBrands::className(),[
-            'id'=> 'brand_id'
+            'id'=> 'brand_id',
             ] );
 
     }
+
 
 }
