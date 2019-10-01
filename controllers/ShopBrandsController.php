@@ -1,16 +1,15 @@
 <?php
 
+
 namespace app\controllers;
+
 
 use app\models\ShopArticles;
 use app\models\ShopBrands;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 
-/**
- * ShopArticlesController implements the CRUD actions for ShopArticles model.
- */
-class ShopArticlesController extends ActiveController
+class ShopBrandsController extends ActiveController
 {
     public $modelClass = 'app\models\ShopArticles';
     public function actions()
@@ -26,7 +25,7 @@ class ShopArticlesController extends ActiveController
     {
         // подготовить и вернуть провайдер данных для действия "index"
         $brand_name = \Yii::$app->request->get('brand_name');
-        $query = ShopArticles::find()->where([]);
+        $query = ShopBrands::find()->where([]);
         if($brand_name){
             $brandId = ShopBrands::find()->where(['name' => $brand_name])->one()->id;
             $query = ShopArticles::find()->where(['brand_id' => $brandId]);
@@ -36,31 +35,6 @@ class ShopArticlesController extends ActiveController
             'query' => $query,
         ]);
     }
-
-
-    /**
-     * Lists all ShopArticles models.
-     * @return mixed
-     */
-//    public function prepareDataProvider()
-//    {
-//        $bid = \Yii::$app->request->get('brand_id');
-//        $query = ShopArticles::find()->where(['brand_id' => $bid]);
-//        return new ActiveDataProvider([
-//            'query' => $query,
-//        ]);
-//    }
-//    public function actionIndex()
-//    {
-//        $searchModel = new ShopArticlesSearch();
-//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-//        return $this->render('index', [
-//            'searchModel' => $searchModel,
-//            'dataProvider' => $dataProvider,
-//        ]);
-//    }
-
-
     public function actionByBrand($id)
     {
         $query = ShopArticles::find();
@@ -87,14 +61,6 @@ class ShopArticlesController extends ActiveController
                 'pageSize' => 2,
             ],
         ]);
-
         return $articlesSearch;
-
-
-
-
     }
-
-
-
 }
