@@ -7,3 +7,4 @@ echo "<h1> Action Index</h1>";
  foreach ($names as $imena){
      echo $imena . '<br>';
  }
+ 

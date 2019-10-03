@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Category;
+use app\models\CategoryShop;
 use app\models\ShopArticles;
 use app\models\ShopBrands;
 use yii\data\ActiveDataProvider;
@@ -18,15 +20,19 @@ class ShopArticlesController extends ActiveController
         $actions = parent::actions();
         // настроить подготовку провайдера данных с помощью метода "prepareDataProvider()"
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
-
         return $actions;
     }
 
     public function prepareDataProvider()
     {
         // подготовить и вернуть провайдер данных для действия "index"
-        $brand_name = \Yii::$app->request->get('brand_name');
         $query = ShopArticles::find()->where([]);
+        $brand_name = \Yii::$app->request->get('brand_name');
+        $catID = \Yii::$app->request->get('category_id');
+        if($catID){
+            $shopArticlesId = ShopArticles::find()->where(['id' => $catID])->one();
+            $query = ShopArticles::find()->where(['id' => $shopArticlesId]);
+        };
         if($brand_name){
             $brandId = ShopBrands::find()->where(['name' => $brand_name])->one()->id;
             $query = ShopArticles::find()->where(['brand_id' => $brandId]);
@@ -89,9 +95,6 @@ class ShopArticlesController extends ActiveController
         ]);
 
         return $articlesSearch;
-
-
-
 
     }
 

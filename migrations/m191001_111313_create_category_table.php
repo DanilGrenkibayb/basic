@@ -18,7 +18,8 @@ class m191001_111313_create_category_table extends Migration
             'description'=> $this->text(),
             'published' => $this-> boolean(),
             'parent_id' => $this->integer(),
-            'order'  => $this->string(),
+            'order'  => $this->integer(),
+
         ]);
     }
 

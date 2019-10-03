@@ -11,7 +11,7 @@ use yii\rest\ActiveController;
 
 class ShopBrandsController extends ActiveController
 {
-    public $modelClass = 'app\models\ShopArticles';
+    public $modelClass = 'app\models\ShopBrands';
     public function actions()
     {
         $actions = parent::actions();

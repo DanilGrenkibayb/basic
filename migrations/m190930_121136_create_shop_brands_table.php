@@ -12,6 +12,7 @@ class m190930_121136_create_shop_brands_table extends Migration
      */
     public function safeUp()
     {
+
         $this->createTable('{{%shop_brands}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(),
