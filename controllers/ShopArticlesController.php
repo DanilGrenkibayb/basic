@@ -7,6 +7,7 @@ use app\models\CategoryShop;
 use app\models\ShopArticles;
 use app\models\ShopBrands;
 use yii\data\ActiveDataProvider;
+use yii\helpers\VarDumper;
 use yii\rest\ActiveController;
 
 /**
@@ -30,8 +31,9 @@ class ShopArticlesController extends ActiveController
         $brand_name = \Yii::$app->request->get('brand_name');
         $catID = \Yii::$app->request->get('category_id');
         if($catID){
-            $shopArticlesId = ShopArticles::find()->where(['id' => $catID])->one();
-            $query = ShopArticles::find()->where(['id' => $shopArticlesId]);
+            $sql = "SELECT shop_articles_id FROM `category_shop_articles` WHERE `category_id`=:id";
+            $ids = \Yii::$app->db->createCommand($sql)->bindValue(':id', $catID)->queryColumn();
+            $query = ShopArticles::find()->where(['id' => $ids,]);
         };
         if($brand_name){
             $brandId = ShopBrands::find()->where(['name' => $brand_name])->one()->id;

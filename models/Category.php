@@ -16,7 +16,12 @@ class Category  extends \yii\db\ActiveRecord
         return $this->hasOne(ShopArticles::className(),[
             'id'=> 'id',
         ] );
+    }
 
+    public function getItems()
+    {
+        return $this->hasMany(ShopArticles::className(), ['category_id ' => 'id'])
+            ->viaTable('category_shop_article', ['id ' => 'shop_articles_id']);
     }
 
 }

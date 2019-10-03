@@ -13,7 +13,7 @@ use yii\rest\ActiveController;
 
 class CategoryController extends ActiveController
 {
-    public $modelClass = 'app\models\ShopArticles';
+    public $modelClass = 'app\models\ShopCategory';
 
     public function actions()
     {
