@@ -33,11 +33,11 @@ class ShopArticlesController extends ActiveController
         if($catID){
             $sql = "SELECT shop_articles_id FROM `category_shop_articles` WHERE `category_id`=:id";
             $ids = \Yii::$app->db->createCommand($sql)->bindValue(':id', $catID)->queryColumn();
-            $query = ShopArticles::find()->where(['id' => $ids,]);
+            $query = ShopArticles::find()->with(['brand'])->where(['id' => $ids,]);
         };
         if($brand_name){
             $brandId = ShopBrands::find()->where(['name' => $brand_name])->one()->id;
-            $query = ShopArticles::find()->where(['brand_id' => $brandId]);
+            $query = ShopArticles::find()->with(['brand'])->where(['brand_id' => $brandId]);
         };
 
         return new ActiveDataProvider([

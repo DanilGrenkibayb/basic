@@ -52,7 +52,17 @@ class ShopArticles extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getShopBrands(){
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        $fields['brand'] = function(){
+            return $this->brand;
+        };
+        return $fields;
+    }
+
+    public function getBrand(){
         return $this->hasOne(ShopBrands::className(),[
             'id'=> 'brand_id',
             ] );
